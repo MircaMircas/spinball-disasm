@@ -1,15 +1,16 @@
 @echo off
 
-set project_name=%~1
-echo %project_name%
-for %%f in ("%project_name%") do set project_name=%%~nf
+REM set project_name=%~1
+REM echo %project_name%
+REM for %%f in ("%project_name%") do set project_name=%%~nf
 
 if not exist "output\" mkdir output
+if not exist "bin\" mkdir bin
 
-set cmd_params=/k /p /o ae- %project_name%.asm, bin\%project_name%.bin >output\errors.txt, , output\%project_name%.lst
+set cmd_params=/k /p /o ae- spinball.asm, bin\spinbuilt.bin >output\spinball.log, , output\spinbuilt.lst
 
-if exist bin\%project_name%.bin (
-  move /Y bin\%project_name%.bin bin\%project_name%.prev.bin >NUL
+if exist bin\spinbuilt.bin (
+  move /Y bin\spinbuilt.bin bin\spinbuilt.prev.bin >NUL
 )
 
 if exist asm68k.exe (
@@ -30,5 +31,5 @@ echo:
 goto:eof
 
 :assembler_completed
-type output\errors.txt
+type output\spinball.log
 goto:final_pause
